@@ -36,13 +36,14 @@
   DECLARE @LowerLongitude FLOAT = -180;
   DECLARE @UpperLongitude FLOAT = 180;
 
-  DECLARE @RandomLatitude FLOAT;
-  DECLARE @RandomLongitude FLOAT;
-
   DECLARE @Counter INT = 1000;
   WHILE @Counter > 0
     BEGIN
-      SELECT -- ...
+      DECLARE @RandomLatitude FLOAT = ( @UpperLatitude - @LowerLatitude - 1 ) * RAND()
+                                      + @LowerLatitude
+      DECLARE @RandomLongitude FLOAT = ( @UpperLongitude - @LowerLongitude - 1 ) * RAND()
+                                       + @LowerLongitude
+      -- ...
 #+END_SRC
 
 * Performance

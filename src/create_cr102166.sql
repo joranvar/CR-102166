@@ -8,16 +8,13 @@ DECLARE @UpperLatitude FLOAT = 90
 DECLARE @LowerLongitude FLOAT = -180
 DECLARE @UpperLongitude FLOAT = 180
 
-DECLARE @RandomLatitude FLOAT
-DECLARE @RandomLongitude FLOAT
-
 DECLARE @Counter INT = 1000
 WHILE @Counter > 0
   BEGIN
-    SELECT @RandomLatitude = ( @UpperLatitude - @LowerLatitude - 1 ) * RAND()
-                             + @LowerLatitude
-    SELECT @RandomLongitude = ( @UpperLongitude - @LowerLongitude - 1 ) * RAND()
-                              + @LowerLongitude
+    DECLARE @RandomLatitude FLOAT = ( @UpperLatitude - @LowerLatitude - 1 ) * RAND()
+                                    + @LowerLatitude
+    DECLARE @RandomLongitude FLOAT = ( @UpperLongitude - @LowerLongitude - 1 ) * RAND()
+                                     + @LowerLongitude
 
     INSERT INTO Points1
       SELECT GEOGRAPHY::Point(@RandomLatitude, @RandomLongitude, 4326)
