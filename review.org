@@ -44,3 +44,32 @@
     BEGIN
       SELECT -- ...
 #+END_SRC
+
+* Performance
+
+You mention that the indices are already set. I assume that means that
+it is not possible to add a [[https://msdn.microsoft.com/en-us/library/ff929109.aspx][Spatial Index]], /or/ a primary key.
+Although I would strongly suggest adding a primary key constraint to
+the temp table in this example:
+
+#+BEGIN_SRC sql
+  CREATE TABLE #Points1
+      ( PointId INT IDENTITY(1, 1) PRIMARY KEY
+      , Point GEOGRAPHY NULL
+      );
+#+END_SRC
+
+Unfortunately, without a Spatial Index or changes to the result
+requirements (you'd need a ~TOP $$n$$~ clause and an ~ORDER BY~ on the
+STDistance column), there is no choice but to check each point against
+all others, which will give a large join of which I don't know how to
+improve the performance.
+
+Small point: you may gain a smaller result (only in number of rows) if
+you leave out the distance from each point to itself:
+
+#+BEGIN_SRC sql
+   INNER JOIN Points1 AS Points2 ON Points1.PointId < Points2.PointId
+#+END_SRC
+
+but that might not fit your requirements.
