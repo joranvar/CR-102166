@@ -61,7 +61,7 @@ the temp table in this example:
 #+END_SRC
 
 Unfortunately, without a Spatial Index or changes to the result
-requirements (you'd need a ~TOP $$n$$~ clause and an ~ORDER BY~ on the
+requirements (you'd need a ~TOP n~ clause and an ~ORDER BY~ on the
 STDistance column), there is no choice but to check each point against
 all others, which will give a large join of which I don't know how to
 improve the performance.
