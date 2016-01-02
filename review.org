@@ -1,0 +1,46 @@
+#+OPTIONS: toc:nil ^:{}
+
+* Style
+
+** Remove unneccessary parentheses
+
+   You don't need parentheses around the condition for the ~WHILE~
+   loop.  You can just write ~WHILE @counter > 0~.
+
+   Also, the extra sets of parentheses around the random numbers are
+   superfluous.  If you leave them off, the line will be a bit less
+   daunting.
+
+** Don't break the line in the middle of a concept
+
+   That is, in the =SELECT @RandomLatitude= line, the statement breaks
+   just before the =*= operator.  As it has a higher precedence than
+   the =+=, this can be a bit misleading.  Either don't break, use
+   parentheses (if really unavoidable) or break before the =+=:
+
+#+BEGIN_SRC sql
+      SELECT @RandomLatitude = ( @UpperLatitude - @LowerLatitude - 1 ) * RAND()
+                               + @LowerLatitude;
+      SELECT @RandomLongitude = ( @UpperLongitude - @LowerLongitude - 1 ) * RAND()
+                                + @LowerLongitude;
+#+END_SRC
+
+** Merge variable declaration and initialisation
+
+   Where possible, declare a variable just before it is used, and
+   initialise it there as well:
+
+#+BEGIN_SRC sql
+  DECLARE @LowerLatitude FLOAT = -90;
+  DECLARE @UpperLatitude FLOAT = 90;
+  DECLARE @LowerLongitude FLOAT = -180;
+  DECLARE @UpperLongitude FLOAT = 180;
+
+  DECLARE @RandomLatitude FLOAT;
+  DECLARE @RandomLongitude FLOAT;
+
+  DECLARE @Counter INT = 1000;
+  WHILE @Counter > 0
+    BEGIN
+      SELECT -- ...
+#+END_SRC
