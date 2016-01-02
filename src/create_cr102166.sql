@@ -1,5 +1,5 @@
 CREATE TABLE Points1
-    ( PointId INT IDENTITY(1, 1)
+    ( PointId INT IDENTITY(1, 1) PRIMARY KEY
     , Point GEOGRAPHY NULL
     );
 
